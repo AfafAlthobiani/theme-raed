@@ -1057,6 +1057,21 @@
                     "placeholder": "e.g. https://salla.sa",
                     "icon": "sicon-link",
                     "value": "https://cdn.pixabay.com/downlo",
+                    "required": false,
+                    "minLength": 6,
+                    "maxLength": 30
+                },
+                {
+                    "id": "alaanoan",
+                    "type": "string",
+                    "format": "text",
+                    "label": "العنوان",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "Placeholder text ..",
+                    "icon": "sicon-format-text-alt",
+                    "value": null,
+                    "multilanguage": false,
                     "required": true,
                     "minLength": 6,
                     "maxLength": 30
