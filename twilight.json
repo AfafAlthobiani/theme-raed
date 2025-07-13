@@ -1029,7 +1029,7 @@
             "path": "vide-banner",
             "fields": [
                 {
-                    "id": "main_title",
+                    "id": "video_banner_title",
                     "type": "static",
                     "format": "title",
                     "label": "العنوان",
@@ -1038,7 +1038,7 @@
                     "icon": "sicon-format-text"
                 },
                 {
-                    "id": "sub_title",
+                    "id": "video_banner_subtitle",
                     "type": "static",
                     "format": "description",
                     "label": "Description",
