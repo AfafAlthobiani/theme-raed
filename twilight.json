@@ -1021,6 +1021,13 @@
                     "maxLength": 30
                 }
             ]
+        },
+        {
+            "key": "e813bfeb-f587-4b8d-b4c6-349c2366adf7",
+            "title": "video banner",
+            "icon": "sicon-store",
+            "path": "vide-banner",
+            "fields": []
         }
     ],
     "support_url": "https://salla.com/",
