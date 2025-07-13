@@ -1,159 +1,39 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>بنر فيديو لمتجر إلكتروني</title>
-  <style>
-    /* Reset and base styles */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+{% set main_title = main_title|default('') %}
+{% set sub_title = sub_title|default('') %}
+{% set video_url = video_url|default('') %}
+{% set cta_text = cta_text|default('') %}
+{% set cta_url = cta_url|default('#') %}
+{% set custom_classes = custom_classes|default('') %}
 
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f9f9f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      padding: 20px;
-    }
-
-    /* Banner container */
-    .video-banner {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      height: 400px;
-      overflow: hidden;
-      border-radius: 12px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-      cursor: pointer;
-      background-color: #000;
-    }
-
-    /* Video styles */
-    .video-banner video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.5);
-      transition: filter 0.3s ease;
-    }
-
-    .video-banner:hover video {
-      filter: brightness(0.7);
-    }
-
-    /* Overlay for texts and button */
-    .video-banner .overlay {
-      position: absolute;
-      top: 50%;
-      right: 30px;
-      transform: translateY(-50%);
-      color: #fff;
-      text-align: right;
-      max-width: 50%;
-    }
-
-    /* Main title */
-    .video-banner .overlay h1 {
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 0.3em;
-      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-    }
-
-    /* Sub title */
-    .video-banner .overlay h2 {
-      font-size: 1.5rem;
-      font-weight: 400;
-      margin-bottom: 1em;
-      color: #ddd;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
-    }
-
-    /* Access button */
-    .video-banner .overlay .btn-access {
-      display: inline-block;
-      padding: 12px 28px;
-      font-size: 1.1rem;
-      font-weight: 600;
-      background-color: #ff6f61;
-      border: none;
-      border-radius: 30px;
-      color: white;
-      text-decoration: none;
-      box-shadow: 0 4px 12px rgba(255, 111, 97, 0.6);
-      transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .video-banner .overlay .btn-access:hover,
-    .video-banner .overlay .btn-access:focus {
-      background-color: #ff3b2f;
-      box-shadow: 0 6px 18px rgba(255, 59, 47, 0.8);
-      outline: none;
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .video-banner {
-        height: 300px;
-      }
-      .video-banner .overlay {
-        max-width: 70%;
-        right: 20px;
-      }
-      .video-banner .overlay h1 {
-        font-size: 2rem;
-      }
-      .video-banner .overlay h2 {
-        font-size: 1.1rem;
-      }
-      .video-banner .overlay .btn-access {
-        padding: 10px 22px;
-        font-size: 1rem;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .video-banner {
-        height: 220px;
-      }
-      .video-banner .overlay {
-        max-width: 90%;
-        right: 15px;
-      }
-      .video-banner .overlay h1 {
-        font-size: 1.5rem;
-      }
-      .video-banner .overlay h2 {
-        font-size: 0.9rem;
-      }
-      .video-banner .overlay .btn-access {
-        padding: 8px 18px;
-        font-size: 0.9rem;
-      }
-    }
-  </style>
-</head>
-<body>
-  <section class="video-banner" role="banner" aria-label="بنر فيديو لمتجر إلكتروني">
-    <video autoplay muted loop playsinline aria-hidden="true">
-      <!-- استخدم رابط فيديو مناسب هنا -->
-      <source src="https://cdn.pixabay.com/download/video/2022/08/01/video-7301535b39.mp4?filename=shopping-online-concept-720p-9554.mp4" type="video/mp4" />
+<section class="video-banner {{ custom_classes }}" role="banner" aria-label="بنر فيديو لمتجر إلكتروني كبير">
+  {% if video_url %}
+    <video autoplay muted loop playsinline aria-hidden="true" class="video-banner__video">
+      <source src="{{ video_url }}" type="video/mp4" />
       متصفحك لا يدعم عرض الفيديو.
     </video>
-
-    <div class="overlay">
-      <h1>أفضل العروض الإلكترونية</h1>
-      <h2>تسوق الآن واحصل على خصومات حصرية</h2>
-      <!-- الزر يوصل لتصنيف معين في المتجر -->
-      <a href="/category/electronics" class="btn-access" role="button" aria-label="انتقل إلى تصنيف الإلكترونيات">تسوق الإلكترونيات</a>
+  {% else %}
+    {# Placeholder or fallback if videoUrl is not provided #}
+    <div class="video-banner__placeholder">
+        <p>فيديو غير متاح</p>
     </div>
-  </section>
-</body>
-</html>
+  {% endif %}
+
+  <div class="video-banner__overlay">
+    <div class="video-banner__content">
+        {% if main_title %}
+            {# يستخدم كـ H1 للصفحة أو القسم لضمان التناسق الهرمي للمحتوى #}
+            <h1 class="video-banner__main-title">{{ main_title }}</h1>
+        {% endif %}
+
+        {% if sub_title %}
+            <p class="video-banner__sub-title">{{ sub_title }}</p>
+        {% endif %}
+
+        {% if cta_text and cta_url %}
+            <a href="{{ cta_url }}" class="video-banner__cta-button" role="button" aria-label="{{ cta_text }}">
+                {{ cta_text }}
+            </a>
+        {% endif %}
+    </div>
+  </div>
+</section>
