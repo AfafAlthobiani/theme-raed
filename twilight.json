@@ -1047,16 +1047,19 @@
                     "icon": "sicon-format-size"
                 },
                 {
-                    "id": "code",
+                    "id": "url",
                     "type": "string",
-                    "format": "code",
-                    "label": "Code",
+                    "format": "url",
+                    "inputType": "url",
+                    "label": "URL",
                     "description": null,
                     "labelHTML": null,
-                    "placeholder": "body { color: green; }",
-                    "icon": "sicon-browser-code",
+                    "placeholder": "e.g. https://salla.sa",
+                    "icon": "sicon-link",
                     "value": null,
-                    "required": false
+                    "required": true,
+                    "minLength": 6,
+                    "maxLength": 30
                 }
             ]
         }
