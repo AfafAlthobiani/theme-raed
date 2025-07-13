@@ -1027,7 +1027,38 @@
             "title": "بنر فديو ( محسن)",
             "icon": "sicon-store",
             "path": "vide-banner",
-            "fields": []
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "static",
+                    "format": "title",
+                    "label": "Title",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-text"
+                },
+                {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": null,
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
+                    "id": "code",
+                    "type": "string",
+                    "format": "code",
+                    "label": "Code",
+                    "description": null,
+                    "labelHTML": null,
+                    "placeholder": "body { color: green; }",
+                    "icon": "sicon-browser-code",
+                    "value": null,
+                    "required": false
+                }
+            ]
         }
     ],
     "support_url": "https://salla.com/",
