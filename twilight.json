@@ -1029,16 +1029,16 @@
             "path": "vide-banner",
             "fields": [
                 {
-                    "id": "title",
+                    "id": "main_title",
                     "type": "static",
                     "format": "title",
-                    "label": "Title",
+                    "label": "العنوان",
                     "value": null,
                     "variant": "h1",
                     "icon": "sicon-format-text"
                 },
                 {
-                    "id": "description",
+                    "id": "sub_title",
                     "type": "static",
                     "format": "description",
                     "label": "Description",
@@ -1047,7 +1047,7 @@
                     "icon": "sicon-format-size"
                 },
                 {
-                    "id": "url",
+                    "id": "video_url",
                     "type": "string",
                     "format": "url",
                     "inputType": "url",
@@ -1056,7 +1056,7 @@
                     "labelHTML": null,
                     "placeholder": "e.g. https://salla.sa",
                     "icon": "sicon-link",
-                    "value": null,
+                    "value": "https://cdn.pixabay.com/downlo",
                     "required": true,
                     "minLength": 6,
                     "maxLength": 30
