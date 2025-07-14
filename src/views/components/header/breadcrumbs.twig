@@ -1,1 +1,18 @@
+{# src/views/components/header/breadcrumbs.twig #}
 
+{% if breadcrumbs is not empty %}
+  <nav class="breadcrumbs" aria-label="breadcrumb">
+    <ol class="breadcrumbs-list">
+      {% for breadcrumb in breadcrumbs %}
+        <li class="breadcrumbs-item">
+          {% if not loop.last %}
+            <a href="{{ breadcrumb.url }}" class="breadcrumbs-link">{{ breadcrumb.title }}</a>
+            <i class="sicon-arrow-left"></i> {# Or your preferred separator icon #}
+          {% else %}
+            <span class="breadcrumbs-current">{{ breadcrumb.title|raw }}</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ol>
+  </nav>
+{% endif %}
