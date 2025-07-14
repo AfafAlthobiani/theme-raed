@@ -6,268 +6,43 @@
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
 {% set important_links = theme.settings.get('important_links') %}
-<header class="store-header">
-  {# Top Navigation Bar #}
-  <div class="top-navbar">
-    <div class="container flex justify-between items-center py-2"> {# Added items-center for vertical alignment #}
-      <div class="flex-1 flex items-center gap-2">
-        {% if important_links %}
-          <salla-menu source="footer" topnav></salla-menu>
+{# MOBILE #}
+    <li  {{ menu.attrs }}>
+        {% if not menu.has_children %}
+            <a {{ menu.link_attrs|raw }} href="{{ menu.url }}>{{ menu.title }}</a>
+        {% else %}
+            <span>{{ menu.title }}</span>
+            <ul>
+                <li><a {{ menu.link_attrs|raw }} href="{{ menu.url }}>{{ menu.title }}</a></li>
+                {% for submenu in menu.children %}
+                    {% include _self with {menu:submenu} %}
+                {% endfor %}
+            </ul>
         {% endif %}
+    </li>
 
-        {# Language & Currency Selection #}
-        <div class="header-buttons">
-          {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
-            <button type="button" onclick="salla.event.dispatch('localization::open')" class="btn--rounded-gray flex items-center px-3 py-1">
-              <span class="flag iti__flag iti__{{ user.language.country_code }} rounded-sm"></span>
-              <span class="mx-1.5 text-sm">|</span> <span class="text-sm">{{ currency.symbol }}</span>
-            </button>
-            <salla-localization-modal></salla-localization-modal>
-          {% endif %}
-        </div>
+{# DESKTOP #}
+    <li    {{ menu.attrs|raw }}>
+        <a {{ menu.link_attrs|raw }} href="{{ menu.url }}">
+            <span>{{ menu.title }}</span>
+        </a>
+        {% if menu.has_children %}
+            <div>
+                <ul>
+                    {% for submenu in menu.children %}
+                        {% include _self with {menu:submenu, is_root_menu:false} %}
+                    {% endfor %}
+                </ul>
+                {% if menu.products %}
+                    <div class="grow p-8">
+                        <div class="grid gap-4 grid-cols-4">
+                            {% for product in menu.products|slice(0, 4) %}
+                                <salla-product-card shadow-on-hover product="{{product}}"></salla-product-card>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
 
-<style> /* أنماط عامة وأنيقة */
-:root {
-    --font-main: 'PingARLT';
-    --color-primary: #aed8e0;
-    --color-primary-dark: #88b2ba;
-    --color-primary-light: #d4feff;
-    --color-primary-reverse: #2f5961;
-    --color-text-dark: #333; /* لقراءة أفضل */
-    --color-light-gray: #f9f9f9;
-    --color-border: #eee;
-}
-
-body {
-    font-family: var(--font-main), sans-serif;
-    color: var(--color-text-dark);
-    line-height: 1.6;
-}
-
-/* أنماط خاصة بالرأس (Header) */
-.store-header {
-    border-bottom: 1px solid var(--color-border);
-    background-color: white;
-}
-
-.top-navbar .container {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    justify-content: flex-end; /* لمحاذاة جهات الاتصال إلى اليمين */
-}
-
-.main-nav-layout {
-    display: flex;
-    flex-direction: column; /* ترتيب رأسي (عمودي) افتراضيًا على الجوال */
-    align-items: center; /* توسيط العناصر أفقيًا */
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    position: relative; /* ضروري لتوسيط الشعار مطلقًا على سطح المكتب */
-}
-
-.main-nav-logo {
-    order: -2; /* لضمان أن الشعار يظهر في الأعلى تمامًا */
-    margin-bottom: 1.5rem; /* مسافة أسفل الشعار على الجوال */
-    flex-shrink: 0; /* منع الشعار من الانكماش */
-}
-
-.navbar-brand img {
-    max-height: 50px; /* تعديل حجم الشعار للأناقة */
-    width: auto;
-}
-
-/* تحديد موضع القائمة الرئيسية (التصنيفات) */
-custom-main-menu {
-    order: -1; /* وضع القائمة بعد الشعار وقبل الأيقونات الأخرى */
-    width: 100%; /* ضمان أن القائمة تأخذ عرضًا كاملاً على الجوال */
-    text-align: center;
-    margin-bottom: 1rem; /* مسافة أسفل القائمة على الجوال */
-}
-
-/* القسم الأيمن من الرأس (الأيقونات) */
-.main-nav-right {
-    display: flex;
-    flex-direction: row-reverse; /* عكس ترتيب أيقونات السلة والعملة/اللغة */
-    align-items: center;
-    gap: 1rem; /* المسافة بين الأيقونات */
-    padding: 0.5rem 0;
-    width: 100%; /* ضمان أن يشغل عرضًا كاملاً للمحاذاة */
-    justify-content: center; /* توسيط الأيقونات أفقيًا على الجوال */
-}
-
-/* القسم الأيسر من الرأس (زر قائمة الجوال) */
-.main-nav-left {
-    position: absolute; /* وضع مطلق للخروج من تدفق Flexbox */
-    left: 1rem; /* محاذاة لليسار (RTL يتم تعديله ضمنيًا) */
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-html[dir="rtl"] .main-nav-left {
-    left: auto;
-    right: 1rem;
-}
-
-/* أنماط الأزرار الأنيقة */
-.btn--rounded-gray {
-    border: 1px solid var(--color-border);
-    background-color: var(--color-light-gray);
-    color: var(--color-text-dark);
-    border-radius: 9999px; /* مدور بالكامل */
-    padding: 0.5rem 1rem;
-    transition: all 0.3s ease;
-}
-.btn--rounded-gray:hover {
-    background-color: #e8e8e8;
-    color: #000;
-}
-
-.header-btn {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    cursor: pointer;
-    color: var(--color-text-dark);
-    transition: color 0.3s ease;
-}
-.header-btn:hover {
-    color: var(--color-primary-dark);
-}
-
-.header-btn__icon {
-    font-size: 1.5rem; /* تعديل حجم الأيقونة */
-}
-
-/* استعلامات الوسائط للشاشات الأكبر (الكمبيوتر المكتبي) */
-@media (min-width: 768px) { /* نقطة توقف md */
-    .main-nav-layout {
-        flex-direction: row; /* العودة إلى الترتيب الأفقي على الشاشات الكبيرة */
-        justify-content: space-between; /* تباعد العناصر */
-        height: 5rem; /* تعديل ارتفاع الهيدر */
-        padding: 0 1rem; /* إزالة المسافة الرأسية */
-    }
-
-    .main-nav-logo {
-        order: 0; /* الترتيب الافتراضي */
-        margin-bottom: 0;
-        position: absolute; /* وضع مطلق للتوسيط */
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    html[dir="rtl"] .main-nav-logo {
-        left: 50%;
-        right: auto;
-        transform: translateX(50%); /* تعديل التحويل للتوسيط في RTL */
-    }
-
-    custom-main-menu {
-        order: 0; /* الترتيب الافتراضي */
-        width: auto; /* عرض تلقائي */
-        margin-bottom: 0;
-        position: static; /* إعادة تعيين الوضع */
-        flex-grow: 1; /* السماح للقائمة بأخذ المساحة المتاحة */
-        display: flex;
-        justify-content: center; /* توسيط عناصر القائمة الرئيسية */
-    }
-
-    .main-nav-right {
-        order: 1; /* وضع الأيقونات إلى اليمين */
-        width: auto;
-        padding: 0;
-        justify-content: flex-end; /* محاذاة الأيقونات إلى النهاية */
-    }
-
-    .main-nav-left {
-        position: static; /* إعادة تعيين الوضع */
-        transform: none;
-        left: auto;
-        right: auto;
-    }
-
-    .header-search {
-        flex-grow: 1; /* السماح لشريط البحث بالتوسع */
-        margin: 0 1rem; /* إضافة هامش أفقي حول شريط البحث */
-    }
-
-    .top-navbar .flex-1.flex.items-center.gap-2 {
-        display: none; /* إخفاء الجزء العلوي الأيسر على سطح المكتب */
-    }
-} </style>  
-
-        {# Store Scope / Branches #}
-        {% if store.scope %}
-          <button class="btn--rounded-gray flex items-center px-3 py-1"
-                  onclick="salla.event.dispatch('scopes::open', {'mode': 'default'})">
-            <i class="sicon-location rtl:ml-1 ltr:mr-1 text-base"></i> <span class="text-sm">{{ store.scope.name }}</span>
-          </button>
+            </div>
         {% endif %}
-
-        {# Integrated Search Bar #}
-        <div class="header-search flex-1 hidden md:block"> {# Hide on small screens, show on medium and up #}
-          <salla-search inline oval height="36"></salla-search>
-        </div>
-      </div>
-
-      <salla-contacts is-header class="hidden md:block"></salla-contacts> {# Hide on small screens #}
-    </div>
-  </div>
-
-  {# Main Navigation Bar #}
-  <div id="mainnav" class="main-nav-container shadow-default bg-white">
-    <div class="inner bg-inherit">
-      <div class="container">
-        <div class="flex items-stretch relative h-16 md:h-20 main-nav-layout"> {# Added height and main-nav-layout class #}
-          {# Left Section: Mobile Menu Toggle #}
-          <div class="flex items-center main-nav-left z-10">
-            <a class="lg:hidden mburger mburger--collapse leading-none rtl:ml-4 ltr:mr-4" href="#mobile-menu" aria-label="Open-menu">
-              <i class="sicon-menu text-primary text-2xl"></i>
-            </a>
-          </div>
-
-          {# Center Section: Store Logo (will be truly centered via CSS) #}
-          <div class="flex items-center justify-center flex-grow main-nav-center z-0">
-            <a class="navbar-brand" href="{{ store.url }}">
-              <img fetchpriority="high" width="auto" height="100%" loading="eager" src="{{ store.logo }}" alt="{{ store.name }} logo" class="max-h-full">
-              {% if is_page('index') %}
-                <h1 class="sr-only">{{ store.name }}</h1>
-              {% else %}
-                <h2 class="sr-only">{{ store.name }}</h2>
-              {% endif %}
-            </a>
-          </div>
-<div id="mainnav" class="main-nav-container {{ store.settings.is_multilingual or store.settings.currencies_enabled or store.scope ? 'menu-has-buttons' : '' }}">
-  <div class="inner bg-inherit">
-    <div class="container flex flex-col justify-between h-full lg:h-auto lg:block">
-      <div>
-        <a href="{{ store.url }}" class="font-bold text-base px-4 text-gray-200 lg:hidden all-cats">{{ trans.blocks.common.allCats }}</a>
-      </div>
-      {% component 'header.menu' %}
-    </div>
-  </div>
-
-          {# Main Desktop Menu (Positioning managed by custom-main-menu component) #}
-          <custom-main-menu></custom-main-menu>
-
-          {# Right Section: User & Cart Icons #}
-          <div class="flex items-center justify-end main-nav-right z-10">
-            {% if user.type=='user' %}
-              <salla-user-menu avatar-only show-header></salla-user-menu>
-            {% else %}
-              <button class="header-btn" aria-label="user-icon" onclick="salla.event.dispatch('login::open')">
-                <i class="header-btn__icon sicon-user-elegant"></i> {# Placeholder for elegant user icon #}
-              </button>
-            {% endif %}
-            <salla-cart-summary class="ml-4 rtl:ml-[unset] rtl:mr-4">
-              <i slot="icon" class="header-btn__icon icon sicon-shopping-basket-chic"></i> {# Placeholder for chic shopping basket icon #}
-            </salla-cart-summary>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</header>
-
-{% if store.scope %}
-  <salla-scopes selection="{{ store.scope.display_as == 'popup' ? 'mandatory' : 'optional' }}"></salla-scopes>
-{% endif %}
+    </li>
