@@ -1,39 +1,60 @@
-{% set main_title = main_title|default('') %}
-{% set sub_title = sub_title|default('') %}
-{% set video_url = video_url|default('') %}
-{% set cta_text = cta_text|default('') %}
-{% set cta_url = cta_url|default('#') %}
-{% set custom_classes = custom_classes|default('') %}
+{#
+| Variable                          | Type      | Description                                                                  |
+|-----------------------------------|-----------|------------------------------------------------------------------------------|
+| component                         | object    | Contains merchant settings for fields from twilight.json `component` section |
+| component.slides[].video_url      | string    | Video URL (MP4 recommended) for the slide background.                        |
+| component.slides[].title          | ?string   | Main title for the slide.                                                    |
+| component.slides[].description    | ?string   | Description or subtitle for the slide.                                       |
+| component.slides[].cta_text       | ?string   | Text for the Call-to-Action button (optional).                               |
+| component.slides[].cta_url        | ?string   | URL for the Call-to-Action button (optional).                                |
+| component.slides                  | object[]  | List of slides.                                                              |
+| position                          | int       | Sorting number starting from zero.                                           |
+#}
+<section class="s-block s-block--hero-slider s-block--full-video-bg wide-placeholder">
+    <salla-slider
+      id="main-slider-{{ position }}"
+      auto-play
+      slider-config='{
+        "lazy": "false",
+        "loop": "true", {# Common for video banners #}
+        "autoplay": { "delay": 7000 } {# Adjust delay as needed #}
+      }'
+      type="fullwidth">
+        <div slot="items">
+            {% for slide in component.slides %}
+                <div class="swiper-slide w-full min-h-[300px] lg:min-h-screen bg-dark relative flex items-center justify-center overflow-hidden">
+                    {# Full-screen video element #}
+                    {% if slide.video_url %}
+                        <video class="absolute inset-0 w-full h-full object-cover video-banner__video" autoplay muted loop playsinline aria-hidden="true">
+                            <source src="{{ slide.video_url }}" type="video/mp4" />
+                            متصفحك لا يدعم عرض الفيديو.
+                        </video>
+                    {% else %}
+                        {# Fallback image or background if no video is provided #}
+                        <div style="background-image: url({{ slide.image | default('/assets/images/default-video-poster.jpg') }});" class="overlay-bg bg-cover bg-center absolute inset-0"></div>
+                    {% endif %}
 
-<section class="video-banner {{ custom_classes }}" role="banner" aria-label="بنر فيديو لمتجر إلكتروني كبير">
-  {% if video_url %}
-    <video autoplay muted loop playsinline aria-hidden="true" class="video-banner__video">
-      <source src="{{ video_url }}" type="video/mp4" />
-      متصفحك لا يدعم عرض الفيديو.
-    </video>
-  {% else %}
-    {# Placeholder or fallback if videoUrl is not provided #}
-    <div class="video-banner__placeholder">
-        <p>فيديو غير متاح</p>
-    </div>
-  {% endif %}
+                    {# Overlay to dim video and provide text contrast #}
+                    <div class="absolute inset-0 bg-black opacity-50 video-banner__overlay-dimmer"></div>
 
-  <div class="video-banner__overlay">
-    <div class="video-banner__content">
-        {% if main_title %}
-            {# يستخدم كـ H1 للصفحة أو القسم لضمان التناسق الهرمي للمحتوى #}
-            <h1 class="video-banner__main-title">{{ main_title }}</h1>
-        {% endif %}
-
-        {% if sub_title %}
-            <p class="video-banner__sub-title">{{ sub_title }}</p>
-        {% endif %}
-
-        {% if cta_text and cta_url %}
-            <a href="{{ cta_url }}" class="video-banner__cta-button" role="button" aria-label="{{ cta_text }}">
-                {{ cta_text }}
-            </a>
-        {% endif %}
-    </div>
-  </div>
+                    {# Content Overlay #}
+                    <div class="flex-center container pb-16 sm:pb-0 home-slider__content relative h-full z-10">
+                        <div class="w-4/6 text-center md:w-7/12 lg:w-5/12 text-white">
+                            {% if slide.title %}
+                                <h2 data-swiper-parallax="-500" class="lg:text-title-size font-bold leading-tight mb-4 video-banner__title">{{ slide.title }}</h2>
+                            {% endif %}
+                            {% if slide.description %}
+                                <p data-swiper-parallax="-300" class="line-clamp-2 description video-banner__description">{{ slide.description }}</p>
+                            {% endif %}
+                            {% if slide.cta_text and slide.cta_url %}
+                                <a href="{{ slide.cta_url }}" class="btn btn-primary mt-8 video-banner__cta-button" data-swiper-parallax="-200">
+                                    {{ slide.cta_text }}
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </salla-slider>
 </section>
