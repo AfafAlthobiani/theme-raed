@@ -1054,15 +1054,6 @@
                             "maxLength": 30
                         },
                         {
-                            "id": "collection.description",
-                            "type": "static",
-                            "format": "description",
-                            "label": "Description",
-                            "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
-                            "variant": "h1",
-                            "icon": "sicon-format-size"
-                        },
-                        {
                             "id": "collection.image",
                             "type": "string",
                             "format": "image",
