@@ -1,1 +1,85 @@
 
+{
+  "name": "بنر فيديو (محسن)",
+  "path": "src/views/components/video-banner.twig",
+  "settings": [
+    {
+      "id": "collection",
+      "type": "collection",
+      "label": "إعدادات شرائح البنر",
+      "helper_text": "أضف وقم بإدارة الشرائح (فيديو أو صور) لبنر السلايدر الخاص بك.",
+      "item_name": "شريحة البنر",
+      "min_count": 1,
+      "max_count": 5,
+      "fields": [
+        {
+          "id": "video_url",
+          "type": "text",
+          "label": "رابط الفيديو",
+          "default": "",
+          "helper_text": "ضع رابط URL للفيديو (صيغة MP4 موصى بها) لهذه الشريحة. سيتم استخدامها كخلفية.",
+          "placeholder": "https://yourstore.com/video.mp4",
+          "attribute": "url",
+          "required": false
+        },
+        {
+          "id": "image",
+          "type": "image",
+          "label": "صورة الشريحة",
+          "default": "",
+          "helper_text": "إذا لم يتوفر فيديو، ستظهر هذه الصورة كخلفية للشريحة.",
+          "placeholder": "اختر صورة",
+          "attribute": "image",
+          "required": false
+        },
+        {
+          "id": "alaanoan",
+          "type": "text",
+          "label": "العنوان الرئيسي للشريحة",
+          "default": "عنوان شريحة جذاب",
+          "helper_text": "العنوان الأساسي الذي يظهر على الشريحة.",
+          "placeholder": "اكتب العنوان هنا",
+          "min_length": 5,
+          "max_length": 100,
+          "translatable": true,
+          "attribute": "title",
+          "required": true
+        },
+        {
+          "id": "text_area_1",
+          "type": "textarea",
+          "label": "نص وصفي للشريحة",
+          "default": "هنا يمكنك إضافة وصف تفصيلي أو نص إضافي لهذه الشريحة.",
+          "helper_text": "وصف قصير أو معلومات إضافية تظهر أسفل العنوان.",
+          "placeholder": "أدخل الوصف هنا",
+          "min_length": 10,
+          "max_length": 250,
+          "translatable": true,
+          "required": false
+        },
+        {
+          "id": "cta_text",
+          "type": "text",
+          "label": "نص زر الدعوة لاتخاذ إجراء (CTA)",
+          "default": "اكتشف الآن",
+          "helper_text": "النص الذي يظهر على زر الإجراء.",
+          "placeholder": "مثال: تسوق الآن",
+          "min_length": 3,
+          "max_length": 50,
+          "translatable": true,
+          "required": false
+        },
+        {
+          "id": "cta_url",
+          "type": "text",
+          "label": "رابط زر الدعوة لاتخاذ إجراء (CTA URL)",
+          "default": "#",
+          "helper_text": "الرابط الذي يذهب إليه الزر عند النقر.",
+          "placeholder": "مثال: /products/new",
+          "attribute": "url",
+          "required": false
+        }
+      ]
+    }
+  ]
+}
