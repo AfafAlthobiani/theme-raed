@@ -1054,15 +1054,15 @@
                             "maxLength": 30
                         },
                         {
-                            "id": "collection.image",
+                            "id": "collection.video_url",
                             "type": "string",
                             "format": "image",
                             "label": "Image",
                             "description": null,
                             "labelHTML": null,
-                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "placeholder": "اضف الفديو او الصورة",
                             "icon": "sicon-image",
-                            "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
+                            "value": null,
                             "required": false
                         },
                         {
@@ -1085,7 +1085,7 @@
                             "icon": "sicon-typography",
                             "value": null,
                             "multilanguage": false,
-                            "required": true,
+                            "required": false,
                             "minLength": 20,
                             "maxLength": "25"
                         },
