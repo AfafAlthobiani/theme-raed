@@ -1,1 +1,45 @@
+{# src/views/components/header/menu-item.twig #}
 
+{# For Mobile Navigation #}
+{% if is_mobile_menu is defined and is_mobile_menu %}
+  <li {{ menu.attrs|raw }}>
+    {% if not menu.has_children %}
+      <a {{ menu.link_attrs|raw }} href="{{ menu.url }}">{{ menu.title }}</a>
+    {% else %}
+      <span class="menu-item-toggle">{{ menu.title }}</span>
+      <ul class="submenu">
+        <li><a {{ menu.link_attrs|raw }} href="{{ menu.url }}">{{ menu.title }}</a></li> {# Link to parent category #}
+        {% for submenu in menu.children %}
+          {% include _self with { menu: submenu, is_mobile_menu: true } %} {# Recursive call #}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </li>
+{% else %}
+{# For Desktop Navigation #}
+  <li class="main-menu-item" {{ menu.attrs|raw }}>
+    <a {{ menu.link_attrs|raw }} href="{{ menu.url }}">
+      <span>{{ menu.title }}</span>
+    </a>
+    {% if menu.has_children %}
+      <div class="submenu-wrapper {% if menu.products or menu.mega_menu %}has-mega-menu{% endif %}">
+        <ul class="submenu">
+          {% for submenu in menu.children %}
+            {# Recursive call for sub-menus #}
+            {% include _self with { menu: submenu } %}
+          {% endfor %}
+        </ul>
+        {% if menu.products %} {# Or menu.mega_menu based on your data #}
+          <div class="mega-menu-products">
+            <div class="grid gap-4 grid-cols-4">
+              {% for product in menu.products|slice(0, 4) %}
+                {# Assuming salla-product-card is a web component #}
+                <salla-product-card shadow-on-hover product="{{ product | json_encode() }}"></salla-product-card>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </li>
+{% endif %}
