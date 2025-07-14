@@ -1087,7 +1087,7 @@
                             "multilanguage": false,
                             "required": true,
                             "minLength": 20,
-                            "maxLength": 255
+                            "maxLength": "25"
                         },
                         {
                             "id": "collection.cta_text",
