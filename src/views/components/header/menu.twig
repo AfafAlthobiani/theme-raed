@@ -1,1 +1,10 @@
+{# src/views/components/header/menu.twig #}
 
+{% if menus is not empty %}
+  <ul class="main-menu">
+    {% for menu in menus %}
+      {# Pass each menu item to the menu-item component #}
+      {% include 'components/header/menu-item.twig' with { menu: menu, is_root_menu: true } %}
+    {% endfor %}
+  </ul>
+{% endif %}
