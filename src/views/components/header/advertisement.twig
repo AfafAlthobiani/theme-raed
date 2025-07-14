@@ -1,1 +1,16 @@
+{# src/views/components/header/advertisement.twig #}
 
+{% if advertisement %}
+  <div class="header-advertisement" style="background-color: {{ advertisement.style.background_color }}; color: {{ advertisement.style.font_color }};">
+    {% if advertisement.icon %}
+      <span class="{{ advertisement.style.icon }}"></span>
+    {% endif %}
+    {% if advertisement.link %}
+      <a href="{{ advertisement.link }}" {% if advertisement.is_new_window %} target='_blank' {% endif %} style="color: {{ advertisement.style.font_color }};">
+        {{ advertisement.description|raw }} {# Use |raw if description can contain HTML #}
+      </a>
+    {% else %}
+      {{ advertisement.description|raw }} {# Use |raw if description can contain HTML #}
+    {% endif %}
+  </div>
+{% endif %}
