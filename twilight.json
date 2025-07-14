@@ -1029,24 +1029,6 @@
             "path": "vide-banner",
             "fields": [
                 {
-                    "id": "video_banner_title",
-                    "type": "static",
-                    "format": "title",
-                    "label": "العنوان",
-                    "value": null,
-                    "variant": "h1",
-                    "icon": "sicon-format-text"
-                },
-                {
-                    "id": "video_banner_subtitle",
-                    "type": "static",
-                    "format": "description",
-                    "label": "Description",
-                    "value": null,
-                    "variant": "h1",
-                    "icon": "sicon-format-size"
-                },
-                {
                     "id": "video_url",
                     "type": "string",
                     "format": "url",
@@ -1060,17 +1042,6 @@
                     "required": false,
                     "minLength": 6,
                     "maxLength": 30
-                },
-                {
-                    "id": "icon_picker",
-                    "type": "string",
-                    "format": "icon",
-                    "label": "Icon Picker",
-                    "description": null,
-                    "labelHTML": null,
-                    "icon": "sicon-user-circle",
-                    "value": "sicon-store",
-                    "required": false
                 }
             ]
         }
