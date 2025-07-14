@@ -67,7 +67,16 @@
               {% endif %}
             </a>
           </div>
-          
+<div id="mainnav" class="main-nav-container {{ store.settings.is_multilingual or store.settings.currencies_enabled or store.scope ? 'menu-has-buttons' : '' }}">
+  <div class="inner bg-inherit">
+    <div class="container flex flex-col justify-between h-full lg:h-auto lg:block">
+      <div>
+        <a href="{{ store.url }}" class="font-bold text-base px-4 text-gray-200 lg:hidden all-cats">{{ trans.blocks.common.allCats }}</a>
+      </div>
+      {% component 'header.menu' %}
+    </div>
+  </div>
+
           {# Main Desktop Menu (Positioning managed by custom-main-menu component) #}
           <custom-main-menu></custom-main-menu>
 
