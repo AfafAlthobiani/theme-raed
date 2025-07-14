@@ -5,68 +5,27 @@
 | cart.items_count | int     |                                 |
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
-{# src/views/components/header/header.twig #}
-
-<header class="site-header">
-  {# Troubleshooting Tip: Handle arrayable theme settings gracefully #}
-  {% set nav_type = theme.settings.get('your_arrayable_key') %}
-  {% if nav_type is iterable %}
-    {% set nav_type = nav_type|first %}
-  {% endif %}
-
-  {# Optional: Include an advertisement component #}
-  {% component "header.advertisement" %}
-
-  <div class="container">
-    <div class="header-main">
-      <div class="header-logo">
-        <a href="/">
-          <img src="{{ 'assets/images/logo.png' | theme_asset }}" alt="{{ "site.name"|trans }}" />
+<div id="header-mainbar" class="header-mainbar">
+  <div class="inner bg-inherit">
+    <div class="container sides-wrap">
+      <div class="right-side flex items-center lg:grow">
+        <a class="navbar-brand" href="{{store.url}}">
+          <img src="{{store.logo}}" alt="{{store.name}}"/>
         </a>
+        <salla-search class="search-bar" id="header-search" inline></salla-search>
       </div>
-
-      {# Include the main navigation menu component #}
-      <nav class="header-nav">
-        {% component "header.menu" %}
-      </nav>
-
-      <div class="header-actions">
-        <div class="search-icon">
-          <a href="/search">
-            <i class="sicon-search"></i> {# Assuming Salla icons or similar #}
-          </a>
-        </div>
-
-        {# Cart/Shopping Bag (from previous example, adapted) #}
-        <div class="cart-icon">
-          <a href="/cart">
-            <i class="sicon-shopping-cart"></i> {# Assuming Salla icons or similar #}
-            {% if cart.items_count > 0 %}
-              <span class="cart-count">{{ cart.items_count }}</span>
-            {% endif %}
-          </a>
-          <div class="cart-dropdown">
-            {% if cart.items_count > 0 %}
-              <p>{{ "cart.items_count_text"|trans({ 'count': cart.items_count }) }}</p>
-              <p>{{ "cart.total_text"|trans }}: {{ cart.total }}</p>
-              <a href="/cart" class="btn btn-primary">{{ "cart.view_cart"|trans }}</a>
-            {% else %}
-              <p>{{ "cart.empty"|trans }}</p>
-            {% endif %}
-          </div>
-        </div>
-
-        <div class="user-account">
-          <a href="/account">
-            <i class="sicon-user"></i> {# Assuming Salla icons or similar #}
-          </a>
-        </div>
+      <div class="left-side flex items-center justify-center lg:justify-end rtl:pr-4 ltr:pl-4 lg:px-0">
+        {% if user.type == "user"%}
+        <salla-user-menu></salla-user-menu>
+        {% else %}
+        <a class="header-icon-button login-button" onclick="salla.event.dispatch('login:open')">
+          <i class="icon sicon-user"></i>
+        </a>
+        {% endif %}
+        <salla-cart-summary class="header-icon-button">
+          <i slot="icon" class="icon sicon-shopping-bag leading-none"></i>
+        </salla-cart-summary>
       </div>
     </div>
   </div>
-
-  {# Optional: Include breadcrumbs component, often placed below the main header #}
-  <div class="container">
-    {% component "breadcrumbs" %}
-  </div>
-</header>
+</div>
