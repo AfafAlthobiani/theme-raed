@@ -1029,13 +1029,67 @@
             "path": "vide-banner",
             "fields": [
                 {
-                    "id": "description",
-                    "type": "static",
-                    "format": "description",
-                    "label": "Description",
-                    "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
-                    "variant": "h1",
-                    "icon": "sicon-format-size"
+                    "id": "collection",
+                    "type": "collection",
+                    "format": "collection",
+                    "label": "Collection",
+                    "description": null,
+                    "labelHTML": null,
+                    "item_label": null,
+                    "icon": "sicon-list-add",
+                    "fields": [
+                        {
+                            "id": "collection.description",
+                            "type": "static",
+                            "format": "description",
+                            "label": "Description",
+                            "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
+                            "variant": "h1",
+                            "icon": "sicon-format-size"
+                        },
+                        {
+                            "id": "collection.alaanoan",
+                            "type": "static",
+                            "format": "title",
+                            "label": "العنوان",
+                            "value": null,
+                            "variant": "h1",
+                            "icon": "sicon-format-text"
+                        },
+                        {
+                            "id": "collection.text_area_1",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "تفاصيل البنر",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Your text here",
+                            "icon": "sicon-typography",
+                            "value": null,
+                            "multilanguage": false,
+                            "required": true,
+                            "minLength": 20,
+                            "maxLength": 255
+                        },
+                        {
+                            "id": "collection.cta_text",
+                            "type": "string",
+                            "format": "textarea",
+                            "label": "زر الوصول",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "Your text here",
+                            "icon": "sicon-typography",
+                            "value": null,
+                            "multilanguage": true,
+                            "required": false,
+                            "minLength": 20,
+                            "maxLength": 255
+                        }
+                    ],
+                    "value": [],
+                    "minLength": 1,
+                    "maxLength": 5
                 },
                 {
                     "id": "video_url",
