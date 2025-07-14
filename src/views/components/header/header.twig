@@ -5,27 +5,48 @@
 | cart.items_count | int     |                                 |
 | cart.total       | string  | Formatted total ex: "١٠٠ ر.س"   |
 #}
-<div id="header-mainbar" class="header-mainbar">
-  <div class="inner bg-inherit">
-    <div class="container sides-wrap">
-      <div class="right-side flex items-center lg:grow">
-        <a class="navbar-brand" href="{{store.url}}">
-          <img src="{{store.logo}}" alt="{{store.name}}"/>
-        </a>
-        <salla-search class="search-bar" id="header-search" inline></salla-search>
-      </div>
-      <div class="left-side flex items-center justify-center lg:justify-end rtl:pr-4 ltr:pl-4 lg:px-0">
-        {% if user.type == "user"%}
-        <salla-user-menu></salla-user-menu>
-        {% else %}
-        <a class="header-icon-button login-button" onclick="salla.event.dispatch('login:open')">
-          <i class="icon sicon-user"></i>
-        </a>
-        {% endif %}
-        <salla-cart-summary class="header-icon-button">
-          <i slot="icon" class="icon sicon-shopping-bag leading-none"></i>
-        </salla-cart-summary>
-      </div>
+<header class="store-header">
+    <div class="container">
+        <div class="top-nav-inner center-between relative space-x-4 rtl:space-x-reverse">
+
+            {# Component for Store Footer Contacts in Header #}
+            {# هذا الجزء يقوم بعرض معلومات الاتصال بالمتجر، إذا كان معرّفًا في إعدادات الثيم #}
+            {% component 'footer.contacts' with { is_header: true } %}
+            {# End of Footer Contacts Component #}
+
+            <div class="left-side flex items-center justify-end grow-x w-calc(100%-90px) overflow-hidden {{ store.settings.is_multilingual or store.settings.currencies_enabled ? 'max-w-full' : '' }}">
+
+                {# Branches/Scopes Component #}
+                {# هذا الجزء يعرض زرًا لاختيار الفرع أو النطاق، ويظهر فقط إذا كان المتجر يدعم الفروع #}
+                {% if store.scope %}
+                    <button type="button" onclick="salla.event.dispatch('scopes:open')" class="btn--gray mx-1 h-full max-w-calc(100%-100px) justify-center overflow-hidden">
+                        <i class="sicon-location"></i> {# أيقونة الموقع #}
+                        <span class="rtl:mr-2 ltr:ml-2 rtl:ml-1 ltr:mr-1 text-ellipsis whitespace-nowrap overflow-hidden">{{ store.scope.name }}</span> {# اسم الفرع الحالي #}
+                    </button>
+                {% endif %}
+                {# End of Branches/Scopes Component #}
+
+                {# Language & Currency Selection #}
+                {# هذا الجزء يعرض زرًا لاختيار اللغة أو العملة، ويظهر فقط إذا كان المتجر متعدد اللغات أو العملات #}
+                {% if store.settings.is_multilingual or store.settings.currencies_enabled %}
+                    <button type="button" onclick="salla.event.dispatch('localization:open')" class="btn--gray rounded mx-1 h-full p-2">
+                        <span class="flag lti lti__{{ user.language_country_code }}"></span> {# أيقونة علم الدولة للغة #}
+                        <span class="span-class opacity-20"></span> {# عنصر غير مستخدم حالياً، قد يكون لتأثيرات بصرية #}
+                        <span class="sicon-rtl ltr:ml-2 rtl:ml-2 ltr:mr-1">{{ currency.symbol }}</span> {# رمز العملة #}
+                    </button>
+                    <salla-localization-modal class="empty:hidden"></salla-localization-modal> {# نافذة منبثقة لاختيار اللغة/العملة #}
+                {% endif %}
+                {# End of Language & Currency Selection #}
+
+            </div>
+        </div>
+
+        {# Footer Menu #}
+        {# هذا الجزء يقوم بعرض قائمة الفوتر، ربما يتم استخدامها هنا لأغراض تنسيقية أو روابط إضافية في الهيدر #}
+        <div class="footer-menu lg:block">
+            {% component 'footer.menu' with { is_header: true } %}
+        </div>
+        {# End of Footer Menu #}
+
     </div>
-  </div>
-</div>
+</header>
