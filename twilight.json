@@ -1029,6 +1029,15 @@
             "path": "vide-banner",
             "fields": [
                 {
+                    "id": "description",
+                    "type": "static",
+                    "format": "description",
+                    "label": "Description",
+                    "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
+                    "variant": "h1",
+                    "icon": "sicon-format-size"
+                },
+                {
                     "id": "video_url",
                     "type": "string",
                     "format": "url",
