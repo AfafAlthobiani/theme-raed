@@ -1051,19 +1051,7 @@
                             "value": null,
                             "required": false,
                             "minLength": 6,
-                            "maxLength": "200"
-                        },
-                        {
-                            "id": "collection.video_url",
-                            "type": "string",
-                            "format": "image",
-                            "label": "Image",
-                            "description": null,
-                            "labelHTML": null,
-                            "placeholder": "اضف الفديو او الصورة",
-                            "icon": "sicon-image",
-                            "value": null,
-                            "required": false
+                            "maxLength": "255"
                         },
                         {
                             "id": "collection.alaanoan",
