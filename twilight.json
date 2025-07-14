@@ -1039,6 +1039,21 @@
                     "icon": "sicon-list-add",
                     "fields": [
                         {
+                            "id": "collection.video_url",
+                            "type": "string",
+                            "format": "url",
+                            "inputType": "url",
+                            "label": "URL",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://salla.sa",
+                            "icon": "sicon-link",
+                            "value": null,
+                            "required": false,
+                            "minLength": 6,
+                            "maxLength": 30
+                        },
+                        {
                             "id": "collection.description",
                             "type": "static",
                             "format": "description",
@@ -1046,6 +1061,18 @@
                             "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
                             "variant": "h1",
                             "icon": "sicon-format-size"
+                        },
+                        {
+                            "id": "collection.image",
+                            "type": "string",
+                            "format": "image",
+                            "label": "Image",
+                            "description": null,
+                            "labelHTML": null,
+                            "placeholder": "e.g. https://hostname.com/image.png",
+                            "icon": "sicon-image",
+                            "value": "https://cdn.salla.network/images/themes/legacy-blocks/youtube.png",
+                            "required": false
                         },
                         {
                             "id": "collection.alaanoan",
@@ -1083,28 +1110,13 @@
                             "value": null,
                             "multilanguage": true,
                             "required": false,
-                            "minLength": 20,
-                            "maxLength": 255
+                            "minLength": "7",
+                            "maxLength": "15"
                         }
                     ],
                     "value": [],
                     "minLength": 1,
-                    "maxLength": 5
-                },
-                {
-                    "id": "video_url",
-                    "type": "string",
-                    "format": "url",
-                    "inputType": "url",
-                    "label": "URL",
-                    "description": null,
-                    "labelHTML": null,
-                    "placeholder": "e.g. https://salla.sa",
-                    "icon": "sicon-link",
-                    "value": null,
-                    "required": false,
-                    "minLength": 6,
-                    "maxLength": 30
+                    "maxLength": "1"
                 }
             ]
         }
