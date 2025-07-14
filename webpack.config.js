@@ -64,4 +64,12 @@ module.exports = {
         new CopyPlugin({patterns: [{from: asset('images'), to: public('images')}]}),
     ],
 }
+    const ThemeWatcher = require('@salla.sa/twilight/watcher');
+module.exports = {
+    ...
+  plugins: [
+    ...
+    new ThemeWatcher()
+  ],
+}
 ;
