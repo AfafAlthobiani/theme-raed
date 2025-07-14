@@ -26,6 +26,175 @@
           {% endif %}
         </div>
 
+<style> /* أنماط عامة وأنيقة */
+:root {
+    --font-main: 'PingARLT';
+    --color-primary: #aed8e0;
+    --color-primary-dark: #88b2ba;
+    --color-primary-light: #d4feff;
+    --color-primary-reverse: #2f5961;
+    --color-text-dark: #333; /* لقراءة أفضل */
+    --color-light-gray: #f9f9f9;
+    --color-border: #eee;
+}
+
+body {
+    font-family: var(--font-main), sans-serif;
+    color: var(--color-text-dark);
+    line-height: 1.6;
+}
+
+/* أنماط خاصة بالرأس (Header) */
+.store-header {
+    border-bottom: 1px solid var(--color-border);
+    background-color: white;
+}
+
+.top-navbar .container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    justify-content: flex-end; /* لمحاذاة جهات الاتصال إلى اليمين */
+}
+
+.main-nav-layout {
+    display: flex;
+    flex-direction: column; /* ترتيب رأسي (عمودي) افتراضيًا على الجوال */
+    align-items: center; /* توسيط العناصر أفقيًا */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    position: relative; /* ضروري لتوسيط الشعار مطلقًا على سطح المكتب */
+}
+
+.main-nav-logo {
+    order: -2; /* لضمان أن الشعار يظهر في الأعلى تمامًا */
+    margin-bottom: 1.5rem; /* مسافة أسفل الشعار على الجوال */
+    flex-shrink: 0; /* منع الشعار من الانكماش */
+}
+
+.navbar-brand img {
+    max-height: 50px; /* تعديل حجم الشعار للأناقة */
+    width: auto;
+}
+
+/* تحديد موضع القائمة الرئيسية (التصنيفات) */
+custom-main-menu {
+    order: -1; /* وضع القائمة بعد الشعار وقبل الأيقونات الأخرى */
+    width: 100%; /* ضمان أن القائمة تأخذ عرضًا كاملاً على الجوال */
+    text-align: center;
+    margin-bottom: 1rem; /* مسافة أسفل القائمة على الجوال */
+}
+
+/* القسم الأيمن من الرأس (الأيقونات) */
+.main-nav-right {
+    display: flex;
+    flex-direction: row-reverse; /* عكس ترتيب أيقونات السلة والعملة/اللغة */
+    align-items: center;
+    gap: 1rem; /* المسافة بين الأيقونات */
+    padding: 0.5rem 0;
+    width: 100%; /* ضمان أن يشغل عرضًا كاملاً للمحاذاة */
+    justify-content: center; /* توسيط الأيقونات أفقيًا على الجوال */
+}
+
+/* القسم الأيسر من الرأس (زر قائمة الجوال) */
+.main-nav-left {
+    position: absolute; /* وضع مطلق للخروج من تدفق Flexbox */
+    left: 1rem; /* محاذاة لليسار (RTL يتم تعديله ضمنيًا) */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+html[dir="rtl"] .main-nav-left {
+    left: auto;
+    right: 1rem;
+}
+
+/* أنماط الأزرار الأنيقة */
+.btn--rounded-gray {
+    border: 1px solid var(--color-border);
+    background-color: var(--color-light-gray);
+    color: var(--color-text-dark);
+    border-radius: 9999px; /* مدور بالكامل */
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+}
+.btn--rounded-gray:hover {
+    background-color: #e8e8e8;
+    color: #000;
+}
+
+.header-btn {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+    cursor: pointer;
+    color: var(--color-text-dark);
+    transition: color 0.3s ease;
+}
+.header-btn:hover {
+    color: var(--color-primary-dark);
+}
+
+.header-btn__icon {
+    font-size: 1.5rem; /* تعديل حجم الأيقونة */
+}
+
+/* استعلامات الوسائط للشاشات الأكبر (الكمبيوتر المكتبي) */
+@media (min-width: 768px) { /* نقطة توقف md */
+    .main-nav-layout {
+        flex-direction: row; /* العودة إلى الترتيب الأفقي على الشاشات الكبيرة */
+        justify-content: space-between; /* تباعد العناصر */
+        height: 5rem; /* تعديل ارتفاع الهيدر */
+        padding: 0 1rem; /* إزالة المسافة الرأسية */
+    }
+
+    .main-nav-logo {
+        order: 0; /* الترتيب الافتراضي */
+        margin-bottom: 0;
+        position: absolute; /* وضع مطلق للتوسيط */
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    html[dir="rtl"] .main-nav-logo {
+        left: 50%;
+        right: auto;
+        transform: translateX(50%); /* تعديل التحويل للتوسيط في RTL */
+    }
+
+    custom-main-menu {
+        order: 0; /* الترتيب الافتراضي */
+        width: auto; /* عرض تلقائي */
+        margin-bottom: 0;
+        position: static; /* إعادة تعيين الوضع */
+        flex-grow: 1; /* السماح للقائمة بأخذ المساحة المتاحة */
+        display: flex;
+        justify-content: center; /* توسيط عناصر القائمة الرئيسية */
+    }
+
+    .main-nav-right {
+        order: 1; /* وضع الأيقونات إلى اليمين */
+        width: auto;
+        padding: 0;
+        justify-content: flex-end; /* محاذاة الأيقونات إلى النهاية */
+    }
+
+    .main-nav-left {
+        position: static; /* إعادة تعيين الوضع */
+        transform: none;
+        left: auto;
+        right: auto;
+    }
+
+    .header-search {
+        flex-grow: 1; /* السماح لشريط البحث بالتوسع */
+        margin: 0 1rem; /* إضافة هامش أفقي حول شريط البحث */
+    }
+
+    .top-navbar .flex-1.flex.items-center.gap-2 {
+        display: none; /* إخفاء الجزء العلوي الأيسر على سطح المكتب */
+    }
+} </style>  
+
         {# Store Scope / Branches #}
         {% if store.scope %}
           <button class="btn--rounded-gray flex items-center px-3 py-1"
